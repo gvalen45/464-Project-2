@@ -145,7 +145,7 @@ public class GraphParser {
         if (!graph.containsVertex(label)) {
             System.out.println("-Node " + label + " does not exist. Cannot remove node.");
             return false;
-        }
+        }//etst code commit
         return graph.removeVertex(label);
     }
 
