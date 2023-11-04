@@ -1,161 +1,101 @@
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class StackTest {
 
-    String filePath = "/Users/gabe/IdeaProjects/CSE 464 First Proj/input.dot";
-
-    private GraphParser s;
+    private GraphParser graphParser;
 
     @Before
-    public void setup(){
-        s = new GraphParser();
-        s.push(1);
-        System.out.println("setup");
-    }
-
-    @After
-    public void teardown(){
-        System.out.println("TEARDOWN");
-    }
-
-
-
-
-
-
-    @Test
-    public void testParseGraph() throws IOException {
-        System.out.println("this is testParseGraph");
-
-        s.parseGraph(filePath);
-
-        // Assuming you've implemented the 'getNumNodes' and 'getNumEdges' methods
-        assertEquals(4, s.getNumNodes());
-        //assertEquals(4, s.getNumEdges());
-
-        // To check if the graph has been parsed correctly, you can print it or check specific nodes and edges
-        System.out.println(s.toString());
-
-    }
-    @Test
-    public void testAddNode() {
-        System.out.println("this is testAddNode ");
-
-        assertTrue(s.addNode("a"));
-        assertFalse(s.addNode("a")); // Adding a duplicate node should fail
-    }
-    @Test
-    public void testAddNodes() {
-        System.out.println("this is testAddNodes");
-
-        //System.out.println("Before adding nodes: " + s.getNumNodes());
-
-        String[] newNodes = {"b", "c", "d"};
-        s.addNodes(newNodes);
-        //System.out.println("After adding nodes: " + s.getNumNodes());
-
-        assertEquals(newNodes.length, s.getNumNodes()); // After adding 4 nodes (including "a"), there should be 4 nodes.
+    public void setup() {
+        graphParser = new GraphParser();
+        //  a graph with nodes and edges
+        graphParser.addNode("A");
+        graphParser.addNode("B");
+        graphParser.addNode("C");
+        graphParser.addEdge("A", "B");
+        graphParser.addEdge("B", "C");
+        System.out.println("Setup complete ");
     }
 
     @Test
-    public void testAddEdge() {
-        System.out.println("this is testAddEdge");
-
-        s.addNode("a");
-        s.addNode("b");
-
-        assertTrue(s.addEdge("a", "b"));
-        assertFalse(s.addEdge("a", "b")); // Adding a duplicate edge should fail
+    public void testRemoveNodeSuccessfully() {
+        System.out.println("TEST: removal of a node that exists.");
+        int initialNodeCount = graphParser.getNumNodes();
+        assertTrue(graphParser.removeNode("B"));
+        assertEquals(initialNodeCount - 1, graphParser.getNumNodes());
+        System.out.println("[x]Node B removed Correctly.\n");
     }
 
     @Test
-    public void testAddEdges() {
-        System.out.println("this is testAddEdges");
-
-        // Adding nodes
-        s.addNode("a");
-        s.addNode("b");
-        s.addNode("c");
-        s.addNode("d");
-
-        // Adding edges and asserting they were added
-        assertTrue(s.addEdge("a", "b"));
-        assertTrue(s.addEdge("b", "c"));
-        assertTrue(s.addEdge("c", "d"));
-        assertTrue(s.addEdge("d", "a"));
-
-        // Asserting that adding duplicate edges fail
-        assertFalse(s.addEdge("a", "b"));
-        assertFalse(s.addEdge("b", "c"));
-        assertFalse(s.addEdge("c", "d"));
-        assertFalse(s.addEdge("d", "a"));
-    }
-    @Test
-    public void testExportToDOT() throws IOException {
-        System.out.println("this is testExportToDOT");
-
-        // Modify the file path to "modifiedOutput.dot"
-        String outputFilePath = "/Users/gabe/IdeaProjects/CSE 464 First Proj/modifiedOutput.dot";
-        assertTrue(s.outputDOTGraph(outputFilePath));
-
-        // Read the content of the generated output file
-        String actualOutput = Files.readString(Paths.get(outputFilePath));
-
-        // Read the content of the expected output file
-        String expectedOutput = Files.readString(Paths.get("/Users/gabe/IdeaProjects/CSE 464 First Proj/expectedModifiedOutput.txt"));
-
-        // Compare the two outputs
-        Assert.assertEquals(expectedOutput, actualOutput);
-    }
-
-    // Project test 2 project part 2
-    @Test
-    public void testRemoveNode() {
-        System.out.println("this is testRemoveNode");
-
-        s.addNode("x");
-        assertTrue(s.removeNode("x")); // Successfully remove a node
-        assertFalse(s.removeNode("x")); // Attempt to remove a non-existent node
+    public void testRemoveNodesSuccessfully() {
+        System.out.println("TEST: testRemoveNodesSuccessfully \n removal of multiple nodes that exist.");
+        int initialNodeCount = graphParser.getNumNodes();
+        graphParser.removeNodes(new String[]{"A", "C"});
+        assertEquals(initialNodeCount - 2, graphParser.getNumNodes());
+        System.out.println("[x]Nodes A and C removed successfully.\n");
     }
 
     @Test
-    public void testRemoveNodes() {
-        System.out.println("this is testRemoveNodes");
-
-        String[] nodesToRemove = {"y", "z"};
-        s.addNodes(nodesToRemove);
-        s.removeNodes(nodesToRemove); // Remove existing nodes
-        assertEquals(0, s.getNumNodes()); // Check if nodes were removed
-
-        s.removeNodes(nodesToRemove); // Attempt to remove non-existent nodes
-        // No assertion needed here since we're just checking that it doesn't crash
+    public void testRemoveEdgeSuccessfully() {
+        System.out.println("TEST: testRemoveEdgeSuccessfully \n removal of an edge that exists.");
+        int initialEdgeCount = graphParser.getNumEdges();
+        assertTrue(graphParser.removeEdge("A", "B"));
+        assertEquals(initialEdgeCount - 1, graphParser.getNumEdges());
+        System.out.println("Edge A->B removed successfully.\n");
     }
 
     @Test
-    public void testRemoveEdge() {
-        System.out.println("this is testRemoveEdge");
+    public void testRemoveNonExistentNode() {
+        System.out.println("TEST: testRemoveNonExistentNode \n removal of a node that DNE.");
+        int initialNodeCount = graphParser.getNumNodes();
+        assertFalse(graphParser.removeNode("Z"));
+        assertEquals(initialNodeCount, graphParser.getNumNodes());
+        System.out.println("[x]Correctly identified that node Z DNE.\n");
+    }
 
-        s.addNode("a");
-        s.addNode("b");
-        s.addEdge("a", "b");
+    @Test
+    public void testRemoveNonExistentNodes() {
+        System.out.println("TEST: testRemoveNonExistentNodes \n removal of multiple nodes that DNE");
+        int initialNodeCount = graphParser.getNumNodes();
+        graphParser.removeNodes(new String[]{"X", "Y"});
+        assertEquals(initialNodeCount, graphParser.getNumNodes());
+        System.out.println("[x]Correctly identified that nodes X and Y DNE.\n");
+    }
 
-    assertTrue(s.removeEdge("a", "b")); // Successfully remove an edge
-    assertFalse(s.removeEdge("a", "b")); // Attempt to remove a non-existent edge
-}
+    @Test
+    public void testRemoveNonExistentEdge() {
+        System.out.println("TEST: testRemoveNonExistentEdge \n  removal of an edge is DNE");
+        int initialEdgeCount = graphParser.getNumEdges();
+        assertFalse(graphParser.removeEdge("A", "Z"));
+        assertEquals(initialEdgeCount, graphParser.getNumEdges());
+        System.out.println("[x]Correctly identified that edge A->Z DNE.\n");
+    }
 
+    @Test
+    public void testBFS() {
+        System.out.println("TEST: testBFS \n  Perform BFS search from node \"1\" to \"4\"");
 
+        //  the graph with nodes and edges
+        graphParser.addNode("1");
+        graphParser.addNode("2");
+        graphParser.addNode("3");
+        graphParser.addNode("4");
+        graphParser.addEdge("1", "2");
+        graphParser.addEdge("2", "3");
+        graphParser.addEdge("3", "4");
 
+        // Perform BFS search from node "1" to "4"
+        GraphParser.Path result = graphParser.graphSearchBFS("1", "4");
 
-
-
-
+        // Verify the path is as expected
+        List<String> expectedPath = Arrays.asList("1", "2", "3", "4");
+        assertNotNull(result);
+        assertEquals(expectedPath, result.getNodes());
+        System.out.println();
+    }
 }

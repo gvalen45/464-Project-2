@@ -3,7 +3,8 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.nio.dot.DOTExporter;
 import org.jgrapht.nio.dot.DOTImporter;
-
+import java.util.LinkedList;
+import java.util.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class GraphParser {
     // Checks for duplicates too
     public boolean addNode(String label) {
         if (graph.containsVertex(label)) {
-            System.out.println("Node " + label + " is a duplicate. Cannot add node");
+            System.out.println("-Node " + label + " is a duplicate. Cannot add node");
             return false;
         }
         return graph.addVertex(label);
@@ -55,6 +56,13 @@ public class GraphParser {
         for (String label : labels) {
             addNode(label);
         }
+
+    //part 2 code adding paths
+
+
+
+
+
     }
 
     @Override
@@ -135,7 +143,7 @@ public class GraphParser {
     // Method to remove a single node
     public boolean removeNode(String label) {
         if (!graph.containsVertex(label)) {
-            System.out.println("Node " + label + " does not exist. Cannot remove node.");
+            System.out.println("-Node " + label + " does not exist. Cannot remove node.");
             return false;
         }
         return graph.removeVertex(label);
@@ -158,7 +166,74 @@ public class GraphParser {
         return graph.removeEdge(edge);
     }
 
+    //part 2 code adding paths
+    // Method to perform BFS and find a path from srcLabel to dstLabel
+    public Path graphSearchBFS(String srcLabel, String dstLabel) {
+        if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
+            return null; // Return null if either the source or destination is not in the graph
+        }
 
+        Queue<String> queue = new LinkedList<>();
+        Map<String, String> prev = new HashMap<>();
+        Set<String> visited = new HashSet<>();
+
+        queue.add(srcLabel);
+        visited.add(srcLabel);
+        prev.put(srcLabel, null); // Source node has no predecessor
+
+        while (!queue.isEmpty()) {
+            String current = queue.poll();
+            System.out.println("Visiting Node: " + current);
+
+
+            if (current.equals(dstLabel)) {
+                Path foundPath = reconstructPath(prev, dstLabel);
+                System.out.println("Path Found: " + foundPath);
+                return foundPath; // Reconstruct the path if destination is found
+
+            }
+
+            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+                String neighbor = graph.getEdgeTarget(edge);
+                if (!visited.contains(neighbor)) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                    prev.put(neighbor, current);
+                }
+            }
+        }
+
+        return null; // Return null if no path is found
+    }
+
+    // Helper method to reconstruct the path from the source to the destination
+    private Path reconstructPath(Map<String, String> prev, String dstLabel) {
+        LinkedList<String> path = new LinkedList<>();
+        for (String at = dstLabel; at != null; at = prev.get(at)) {
+            path.addFirst(at);
+        }
+        return new Path(path);
+    }
+
+    // ... (rest of the GraphParser class)
+
+    // Inner Path class
+    public static class Path {
+        private final List<String> nodes;
+
+        public Path(List<String> nodes) {
+            this.nodes = nodes;
+        }
+
+        public List<String> getNodes() {
+            return nodes;
+        }
+
+        @Override
+        public String toString() {
+            return String.join(" -> ", nodes);
+        }
+    }
 
 
     public static void main(String[] args) {
