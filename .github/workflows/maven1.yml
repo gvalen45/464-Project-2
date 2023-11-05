@@ -16,8 +16,6 @@ jobs:
       - name: Build with Maven
         run: |
             cd CSE\ 464\ First\ Proj-2
-            mvn clean
-            mnv install
             mvn -B package
       - name: Run tests
         run: |
