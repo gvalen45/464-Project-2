@@ -18,4 +18,6 @@ jobs:
             cd CSE\ 464\ First\ Proj-2
             mvn -B package
       - name: Run tests
-        run: mvn test
+        run: |
+            cd CSE\ 464\ First\ Proj-2
+            mvn test
