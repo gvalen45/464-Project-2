@@ -275,7 +275,7 @@ public class GraphParser {
 //        return null; // Return null if no path is found
 //    }
 // Recursive DFS method
-    public Path graphSearchDFSRecursive(String srcLabel, String dstLabel) {
+    public Path graphSearch(String srcLabel, String dstLabel) {
         Set<String> visited = new HashSet<>();
         List<String> pathList = new ArrayList<>();
         pathList.add(srcLabel);
