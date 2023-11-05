@@ -115,7 +115,7 @@ public class StackTest {
         // Perform DFS search from node "A" to "C", specifying the DFS algorithm
         GraphParser.Path result = graphParser.graphSearch("A", "C", GraphParser.Algorithm.DFS);
 
-        // Verify the path is as expected
+        // Verify thegit  path is as expected
         List<String> expectedPath = Arrays.asList("A", "B", "C"); // This is just an example
         assertNotNull(result);
         assertEquals(expectedPath, result.getNodes());
