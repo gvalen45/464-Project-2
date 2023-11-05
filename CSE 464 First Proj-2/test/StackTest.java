@@ -114,7 +114,7 @@ public class StackTest {
         System.out.println(graphParser.toString()); // Print the graph before performing DFS
 
         // Perform  DFS search from node "A" to "C"
-        GraphParser.Path result = graphParser.graphSearchDFSRecursive("A", "C");
+        GraphParser.Path result = graphParser.graphSearch("A", "C");
 
         // Verify the path is as expected
         List<String> expectedPath = Arrays.asList("A", "B", "C"); // This is just an example
