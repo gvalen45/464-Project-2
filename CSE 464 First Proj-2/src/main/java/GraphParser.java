@@ -275,6 +275,69 @@ public class GraphParser {
     }
     //end part 4 dfs
 
+    public enum Algorithm {
+        BFS,
+        DFS
+    }
+
+    //Part 5
+    public Path graphSearch(String srcLabel, String dstLabel, Algorithm algo) {
+        switch (algo) {
+            case BFS:
+                if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
+                    return null; // Return null if either the source or destination is not in the graph
+                }
+
+                Queue<String> queue = new LinkedList<>();
+                Map<String, String> prev = new HashMap<>();
+                Set<String> visited = new HashSet<>();
+
+                queue.add(srcLabel);
+                visited.add(srcLabel);
+                prev.put(srcLabel, null); // Source node has no predecessor
+
+                while (!queue.isEmpty()) {
+                    String current = queue.poll();
+                    System.out.println("Visiting Node: " + current);
+
+
+                    if (current.equals(dstLabel)) {
+                        Path foundPath = reconstructPath(prev, dstLabel);
+                        System.out.println("Path Found: " + foundPath);
+                        return foundPath; // Reconstruct the path if destination is found
+
+                    }
+
+                    for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+                        String neighbor = graph.getEdgeTarget(edge);
+                        if (!visited.contains(neighbor)) {
+                            queue.add(neighbor);
+                            visited.add(neighbor);
+                            prev.put(neighbor, current);
+                        }
+                    }
+                }
+
+                return null;
+
+            case DFS:
+                Set<String> visitedd = new HashSet<>();
+                List<String> pathList = new ArrayList<>();
+                pathList.add(srcLabel);
+                boolean found = dfsHelper(srcLabel, dstLabel, visitedd, pathList);
+                if (found) {
+                    return new Path(new ArrayList<>(pathList));
+                } else {
+                    return null;
+                }
+            default:
+                throw new IllegalArgumentException("Unsupported search algorithm");
+        }
+    }
+
+
+
+
 
     public static void main(String[] args) {
         System.out.println("Feature 1: Parse a DOT graph file to create a graph");

@@ -96,25 +96,24 @@ public class StackTest {
         graphParser.addEdge("2", "3");
         graphParser.addEdge("3", "4");
 
-        // Perform BFS search from node "1" to "4"
-        GraphParser.Path result = graphParser.graphSearch("1", "4");
+        GraphParser.Path result = graphParser.graphSearch("1", "4", GraphParser.Algorithm.BFS);
 
         // Verify the path is as expected
         List<String> expectedPath = Arrays.asList("1", "2", "3", "4");
         assertNotNull(result);
         assertEquals(expectedPath, result.getNodes());
-        System.out.println();
+        System.out.println("[x] BFS found the correct path.");
     }
 
 
     @Test
     public void testDFS() {
-        System.out.println("TEST: testDFSS \n  Perform  DFS search from node \"A\" to \"C\"");
+        System.out.println("TEST:  testDFS \n  Perform DFS search from node \"A\" to \"C\"");
         System.out.println("Graph before DFS:");
         System.out.println(graphParser.toString()); // Print the graph before performing DFS
 
-        // Perform  DFS search from node "A" to "C"
-        GraphParser.Path result = graphParser.graphSearch("A", "C");
+        // Perform DFS search from node "A" to "C", specifying the DFS algorithm
+        GraphParser.Path result = graphParser.graphSearch("A", "C", GraphParser.Algorithm.DFS);
 
         // Verify the path is as expected
         List<String> expectedPath = Arrays.asList("A", "B", "C"); // This is just an example
@@ -125,7 +124,6 @@ public class StackTest {
         System.out.println("Graph after DFS:");
         System.out.println(graphParser.toString());
     }
-
 
 
 }
