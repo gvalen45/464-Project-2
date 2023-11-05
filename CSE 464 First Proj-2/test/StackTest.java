@@ -97,7 +97,7 @@ public class StackTest {
         graphParser.addEdge("3", "4");
 
         // Perform BFS search from node "1" to "4"
-        GraphParser.Path result = graphParser.graphSearchBFS("1", "4");
+        GraphParser.Path result = graphParser.graphSearch("1", "4");
 
         // Verify the path is as expected
         List<String> expectedPath = Arrays.asList("1", "2", "3", "4");
