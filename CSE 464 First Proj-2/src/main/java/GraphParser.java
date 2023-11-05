@@ -213,11 +213,13 @@ public class GraphParser {
             path.addFirst(at);
         }
         return new Path(path);
+
     }
 
 
     // Inner Path class
     public static class Path {
+        boolean ab = false;
         private final List<String> nodes;
 
         public Path(List<String> nodes) {
