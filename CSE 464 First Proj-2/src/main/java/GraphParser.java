@@ -145,7 +145,7 @@ public class GraphParser {
         if (!graph.containsVertex(label)) {
             System.out.println("-Node " + label + " does not exist. Cannot remove node.");
             return false;
-        }
+        }//etst code commit
         return graph.removeVertex(label);
     }
 
@@ -215,7 +215,6 @@ public class GraphParser {
         return new Path(path);
     }
 
-    // ... (rest of the GraphParser class)
 
     // Inner Path class
     public static class Path {
@@ -234,6 +233,83 @@ public class GraphParser {
             return String.join(" -> ", nodes);
         }
     }
+
+    //project 2 part 4
+
+    // Method to perform DFS and find a path from srcLabel to dstLabel
+//    public Path graphSearchDFS(String srcLabel, String dstLabel) {
+//        if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
+//
+//            return null; // Return null if either the source or destination is not in the graph
+//        }
+//
+//        Stack<String> stack = new Stack<>();
+//        Map<String, String> prev = new HashMap<>();
+//        Set<String> visited = new HashSet<>();
+//
+//        stack.push(srcLabel);
+//        visited.add(srcLabel);
+//        prev.put(srcLabel, null); // Source node has no predecessor
+//
+//        while (!stack.isEmpty()) {
+//            String current = stack.pop();
+//
+//            System.out.println("Visiting Node: " + current);
+//
+//            if (current.equals(dstLabel)) {
+//                Path foundPath = reconstructPath(prev, dstLabel);
+//                System.out.println("Path Found: " + foundPath);
+//                return foundPath; // Reconstruct the path if destination is found
+//            }
+//
+//            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+//                String neighbor = graph.getEdgeTarget(edge);
+//                if (!visited.contains(neighbor)) {
+//                    stack.push(neighbor);
+//                    visited.add(neighbor);
+//                    prev.put(neighbor, current);
+//                }
+//            }
+//        }
+//
+//        return null; // Return null if no path is found
+//    }
+// Recursive DFS method
+    public Path graphSearchDFSRecursive(String srcLabel, String dstLabel) {
+        Set<String> visited = new HashSet<>();
+        List<String> pathList = new ArrayList<>();
+        pathList.add(srcLabel);
+        boolean found = dfsHelper(srcLabel, dstLabel, visited, pathList);
+        if (found) {
+            return new Path(new ArrayList<>(pathList));
+        } else {
+            return null;
+        }
+    }
+
+    // Helper method for recursive DFS
+    private boolean dfsHelper(String current, String destination, Set<String> visited, List<String> pathList) {
+        if (current.equals(destination)) {
+            return true;
+        }
+
+        visited.add(current);
+
+        for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+            String neighbor = graph.getEdgeTarget(edge);
+            if (!visited.contains(neighbor)) {
+                pathList.add(neighbor);
+                boolean found = dfsHelper(neighbor, destination, visited, pathList);
+                if (found) {
+                    return true;
+                }
+                pathList.remove(pathList.size() - 1);
+            }
+        }
+
+        return false;
+    }
+    //end part 4 dfs
 
 
     public static void main(String[] args) {

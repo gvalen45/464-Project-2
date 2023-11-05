@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +20,13 @@ public class StackTest {
         graphParser.addNode("C");
         graphParser.addEdge("A", "B");
         graphParser.addEdge("B", "C");
-        System.out.println("Setup complete ");
+        System.out.println("***Setup done*** ");
+    }
+
+
+    @After
+    public void teardown(){
+        System.out.println("***TEARDOWN***\n");
     }
 
     @Test
@@ -28,7 +35,7 @@ public class StackTest {
         int initialNodeCount = graphParser.getNumNodes();
         assertTrue(graphParser.removeNode("B"));
         assertEquals(initialNodeCount - 1, graphParser.getNumNodes());
-        System.out.println("[x]Node B removed Correctly.\n");
+        System.out.println("[x]Node B removed Correctly.");
     }
 
     @Test
@@ -37,7 +44,7 @@ public class StackTest {
         int initialNodeCount = graphParser.getNumNodes();
         graphParser.removeNodes(new String[]{"A", "C"});
         assertEquals(initialNodeCount - 2, graphParser.getNumNodes());
-        System.out.println("[x]Nodes A and C removed successfully.\n");
+        System.out.println("[x]Nodes A and C removed successfully.");
     }
 
     @Test
@@ -46,7 +53,7 @@ public class StackTest {
         int initialEdgeCount = graphParser.getNumEdges();
         assertTrue(graphParser.removeEdge("A", "B"));
         assertEquals(initialEdgeCount - 1, graphParser.getNumEdges());
-        System.out.println("Edge A->B removed successfully.\n");
+        System.out.println("Edge A->B removed successfully.");
     }
 
     @Test
@@ -55,7 +62,7 @@ public class StackTest {
         int initialNodeCount = graphParser.getNumNodes();
         assertFalse(graphParser.removeNode("Z"));
         assertEquals(initialNodeCount, graphParser.getNumNodes());
-        System.out.println("[x]Correctly identified that node Z DNE.\n");
+        System.out.println("[x]Correctly identified that node Z DNE.");
     }
 
     @Test
@@ -64,7 +71,7 @@ public class StackTest {
         int initialNodeCount = graphParser.getNumNodes();
         graphParser.removeNodes(new String[]{"X", "Y"});
         assertEquals(initialNodeCount, graphParser.getNumNodes());
-        System.out.println("[x]Correctly identified that nodes X and Y DNE.\n");
+        System.out.println("[x]Correctly identified that nodes X and Y DNE.");
     }
 
     @Test
@@ -73,7 +80,7 @@ public class StackTest {
         int initialEdgeCount = graphParser.getNumEdges();
         assertFalse(graphParser.removeEdge("A", "Z"));
         assertEquals(initialEdgeCount, graphParser.getNumEdges());
-        System.out.println("[x]Correctly identified that edge A->Z DNE.\n");
+        System.out.println("[x]Correctly identified that edge A->Z DNE.");
     }
 
     @Test
@@ -98,4 +105,27 @@ public class StackTest {
         assertEquals(expectedPath, result.getNodes());
         System.out.println();
     }
+
+
+    @Test
+    public void testDFS() {
+        System.out.println("TEST: testDFSS \n  Perform  DFS search from node \"A\" to \"C\"");
+        System.out.println("Graph before DFS:");
+        System.out.println(graphParser.toString()); // Print the graph before performing DFS
+
+        // Perform  DFS search from node "A" to "C"
+        GraphParser.Path result = graphParser.graphSearchDFSRecursive("A", "C");
+
+        // Verify the path is as expected
+        List<String> expectedPath = Arrays.asList("A", "B", "C"); // This is just an example
+        assertNotNull(result);
+        assertEquals(expectedPath, result.getNodes());
+        System.out.println("[x] DFS found the correct path.");
+
+        System.out.println("Graph after DFS:");
+        System.out.println(graphParser.toString());
+    }
+
+
+
 }
