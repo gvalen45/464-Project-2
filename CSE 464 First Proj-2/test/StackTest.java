@@ -106,20 +106,26 @@ public class StackTest {
         System.out.println();
     }
 
+
     @Test
     public void testDFS() {
-        System.out.println("TEST: testDFS \n  Perform recursive DFS search from node \"A\" to \"C\"");
+        System.out.println("TEST: testDFSS \n  Perform  DFS search from node \"A\" to \"C\"");
+        System.out.println("Graph before DFS:");
+        System.out.println(graphParser.toString()); // Print the graph before performing DFS
 
-        // Perform recursive DFS search from node "A" to "C"
+        // Perform  DFS search from node "A" to "C"
         GraphParser.Path result = graphParser.graphSearchDFSRecursive("A", "C");
 
         // Verify the path is as expected
-        // The expected path might differ from BFS, depending on the graph structure
         List<String> expectedPath = Arrays.asList("A", "B", "C"); // This is just an example
         assertNotNull(result);
         assertEquals(expectedPath, result.getNodes());
-        System.out.println("[x]Recursive DFS found the correct path.");
+        System.out.println("[x] DFS found the correct path.");
+
+        System.out.println("Graph after DFS:");
+        System.out.println(graphParser.toString());
     }
+
 
 
 }
