@@ -168,43 +168,7 @@ public class GraphParser {
 
     //part 2 code adding paths
     // Method to perform BFS and find a path from srcLabel to dstLabel
-    public Path graphSearch(String srcLabel, String dstLabel) {
-        if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
-            return null; // cdoe Return null if either the source or destination is not in the graph
-        }
 
-        Queue<String> queue = new LinkedList<>();
-        Map<String, String> prev = new HashMap<>();
-        Set<String> visited = new HashSet<>();
-
-        queue.add(srcLabel);
-        visited.add(srcLabel);
-        prev.put(srcLabel, null); // Source node has no predecessor
-
-        while (!queue.isEmpty()) {
-            String current = queue.poll();
-            System.out.println("Visiting Node: " + current);
-
-
-            if (current.equals(dstLabel)) {
-                Path foundPath = reconstructPath(prev, dstLabel);
-                System.out.println("Path Found: " + foundPath);
-                return foundPath; // Reconstruct the path if destination is found
-
-            }
-
-            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
-                String neighbor = graph.getEdgeTarget(edge);
-                if (!visited.contains(neighbor)) {
-                    queue.add(neighbor);
-                    visited.add(neighbor);
-                    prev.put(neighbor, current);
-                }
-            }
-        }
-
-        return null; // Return null if no path is found
-    }
 
     // Helper method to reconstruct the path from the source to the destination
     private Path reconstructPath(Map<String, String> prev, String dstLabel) {
