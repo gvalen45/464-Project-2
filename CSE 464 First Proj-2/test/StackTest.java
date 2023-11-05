@@ -108,7 +108,7 @@ public class StackTest {
 
     @Test
     public void testDFS() {
-        System.out.println("TEST:  testDFS \n  Perform DFS search from node \"A\" to \"C\"");
+        System.out.println("TEST: testDFS \n  Perform DFS search from node \"A\" to \"C\"");
         System.out.println("Graph before DFS:");
         System.out.println(graphParser.toString()); // Print the graph before performing DFS
 

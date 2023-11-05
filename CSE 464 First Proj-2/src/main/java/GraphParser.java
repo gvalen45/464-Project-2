@@ -384,7 +384,7 @@ public class GraphParser {
                 System.out.println("Failed to export the graph.");
             }
         } else {
-            System.out.println("Failed to parse the DOT graph file.");
+            System.out.println("Failed to parse the DOT graph file. ");
         }
     }
 
