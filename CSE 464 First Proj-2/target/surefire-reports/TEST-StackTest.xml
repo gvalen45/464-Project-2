@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="StackTest" time="0.054" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="StackTest" time="0.135" tests="8" errors="0" skipped="0" failures="0">
   <properties>
-    <property name="gopherProxySet" value="false"/>
-    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
-    <property name="java.specification.version" value="11"/>
-    <property name="sun.cpu.isalist" value=""/>
+    <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.class.path" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/test-classes:/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/classes:/Users/gabe/.m2/repository/org/jgrapht/jgrapht-core/1.5.2/jgrapht-core-1.5.2.jar:/Users/gabe/.m2/repository/org/jheaps/jheaps/0.14/jheaps-0.14.jar:/Users/gabe/.m2/repository/org/apfloat/apfloat/1.10.1/apfloat-1.10.1.jar:/Users/gabe/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/gabe/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/gabe/.m2/repository/org/jgrapht/jgrapht-ext/1.5.2/jgrapht-ext-1.5.2.jar:/Users/gabe/.m2/repository/com/github/vlsi/mxgraph/jgraphx/4.2.2/jgraphx-4.2.2.jar:/Users/gabe/.m2/repository/org/jgrapht/jgrapht-io/1.5.2/jgrapht-io-1.5.2.jar:/Users/gabe/.m2/repository/org/antlr/antlr4-runtime/4.12.0/antlr4-runtime-4.12.0.jar:/Users/gabe/.m2/repository/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar:/Users/gabe/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="java.vendor.url" value="https://openjdk.java.net/"/>
-    <property name="user.timezone" value=""/>
-    <property name="java.vm.specification.version" value="11"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
     <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="21"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
-    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/surefire/surefirebooter-20231104205731701_3.jar /Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/surefire 2023-11-04T20-57-31_659-jvmRun1 surefire-20231104205731701_1tmp surefire_0-20231104205731701_2tmp"/>
+    <property name="sun.boot.library.path" value="/Users/gabe/Library/Java/JavaVirtualMachines/openjdk-21/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/surefire/surefirebooter-20231104211852623_3.jar /Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/surefire 2023-11-04T21-18-52_443-jvmRun1 surefire-20231104211852623_1tmp surefire_0-20231104211852623_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/test-classes:/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/classes:/Users/gabe/.m2/repository/org/jgrapht/jgrapht-core/1.5.2/jgrapht-core-1.5.2.jar:/Users/gabe/.m2/repository/org/jheaps/jheaps/0.14/jheaps-0.14.jar:/Users/gabe/.m2/repository/org/apfloat/apfloat/1.10.1/apfloat-1.10.1.jar:/Users/gabe/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/Users/gabe/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/gabe/.m2/repository/org/jgrapht/jgrapht-ext/1.5.2/jgrapht-ext-1.5.2.jar:/Users/gabe/.m2/repository/com/github/vlsi/mxgraph/jgraphx/4.2.2/jgraphx-4.2.2.jar:/Users/gabe/.m2/repository/org/jgrapht/jgrapht-io/1.5.2/jgrapht-io-1.5.2.jar:/Users/gabe/.m2/repository/org/antlr/antlr4-runtime/4.12.0/antlr4-runtime-4.12.0.jar:/Users/gabe/.m2/repository/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar:/Users/gabe/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:"/>
@@ -24,45 +20,44 @@
     <property name="user.home" value="/Users/gabe"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.version.date" value="2023-04-18"/>
-    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home"/>
+    <property name="java.version.date" value="2023-09-19"/>
+    <property name="java.home" value="/Users/gabe/Library/Java/JavaVirtualMachines/openjdk-21/Contents/Home"/>
     <property name="file.separator" value="/"/>
     <property name="basedir" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
-    <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/surefire/surefirebooter-20231104205731701_3.jar"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2/target/surefire/surefirebooter-20231104211852623_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
-    <property name="java.runtime.version" value="11.0.19+9-LTS-224"/>
+    <property name="java.runtime.version" value="21+35-2513"/>
     <property name="user.name" value="gabe"/>
+    <property name="stdout.encoding" value="UTF-8"/>
     <property name="path.separator" value=":"/>
     <property name="os.version" value="13.0"/>
-    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
-    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
-    <property name="java.vendor.version" value="18.9"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="localRepository" value="/Users/gabe/.m2/repository"/>
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="/var/folders/qv/nddk376n7zvckcmc2r8qd3b00000gn/T/"/>
-    <property name="idea.version" value="2023.2.2"/>
-    <property name="java.version" value="11.0.19"/>
+    <property name="java.version" value="21"/>
     <property name="user.dir" value="/Users/gabe/IdeaProjects/464-Project-2/CSE 464 First Proj-2"/>
-    <property name="os.arch" value="aarch64"/>
+    <property name="os.arch" value="x86_64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
-    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/gabe/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
     <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="java.vm.info" value="mixed mode"/>
-    <property name="java.vm.version" value="11.0.19+9-LTS-224"/>
+    <property name="java.vm.version" value="21+35-2513"/>
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
-    <property name="java.class.version" value="55.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testBFS" classname="StackTest" time="0.023">
+  <testcase name="testBFS" classname="StackTest" time="0.034">
     <system-out><![CDATA[***Setup done*** 
 TEST: testBFS 
   Perform BFS search from node "1" to "4"
@@ -76,7 +71,7 @@ Path Found: 1 -> 2 -> 3 -> 4
 
 ]]></system-out>
   </testcase>
-  <testcase name="testDFS" classname="StackTest" time="0">
+  <testcase name="testDFS" classname="StackTest" time="0.001">
     <system-out><![CDATA[***Setup done*** 
 TEST: testDFSS 
   Perform  DFS search from node "A" to "C"
@@ -109,7 +104,7 @@ B -> C
 
 ]]></system-out>
   </testcase>
-  <testcase name="testRemoveEdgeSuccessfully" classname="StackTest" time="0">
+  <testcase name="testRemoveEdgeSuccessfully" classname="StackTest" time="0.002">
     <system-out><![CDATA[***Setup done*** 
 TEST: testRemoveEdgeSuccessfully 
  removal of an edge that exists.
@@ -118,7 +113,7 @@ Edge A->B removed successfully.
 
 ]]></system-out>
   </testcase>
-  <testcase name="testRemoveNodesSuccessfully" classname="StackTest" time="0">
+  <testcase name="testRemoveNodesSuccessfully" classname="StackTest" time="0.001">
     <system-out><![CDATA[***Setup done*** 
 TEST: testRemoveNodesSuccessfully 
  removal of multiple nodes that exist.
@@ -127,7 +122,7 @@ TEST: testRemoveNodesSuccessfully
 
 ]]></system-out>
   </testcase>
-  <testcase name="testRemoveNodeSuccessfully" classname="StackTest" time="0">
+  <testcase name="testRemoveNodeSuccessfully" classname="StackTest" time="0.001">
     <system-out><![CDATA[***Setup done*** 
 TEST: removal of a node that exists.
 [x]Node B removed Correctly.
@@ -135,7 +130,7 @@ TEST: removal of a node that exists.
 
 ]]></system-out>
   </testcase>
-  <testcase name="testRemoveNonExistentEdge" classname="StackTest" time="0.002">
+  <testcase name="testRemoveNonExistentEdge" classname="StackTest" time="0.012">
     <system-out><![CDATA[***Setup done*** 
 TEST: testRemoveNonExistentEdge 
   removal of an edge is DNE
@@ -145,7 +140,7 @@ Edge from: A to Z does not exist.
 
 ]]></system-out>
   </testcase>
-  <testcase name="testRemoveNonExistentNode" classname="StackTest" time="0.002">
+  <testcase name="testRemoveNonExistentNode" classname="StackTest" time="0.007">
     <system-out><![CDATA[***Setup done*** 
 TEST: testRemoveNonExistentNode 
  removal of a node that DNE.
@@ -155,7 +150,7 @@ TEST: testRemoveNonExistentNode
 
 ]]></system-out>
   </testcase>
-  <testcase name="testRemoveNonExistentNodes" classname="StackTest" time="0">
+  <testcase name="testRemoveNonExistentNodes" classname="StackTest" time="0.001">
     <system-out><![CDATA[***Setup done*** 
 TEST: testRemoveNonExistentNodes 
  removal of multiple nodes that DNE
