@@ -31,7 +31,7 @@ public class StackTest {
 
     @Test
     public void testRemoveNodeSuccessfully() {
-        System.out.println("TEST: removal of a node that exists.");
+        System.out.println("TEST: removal of a node that exists..");
         int initialNodeCount = graphParser.getNumNodes();
         assertTrue(graphParser.removeNode("B"));
         assertEquals(initialNodeCount - 1, graphParser.getNumNodes());
