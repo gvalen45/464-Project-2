@@ -8,7 +8,7 @@ import java.util.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-//test commitit Branch Test bfs
+//test commit Branch Test bfs
 public class GraphParser {
     private final List<Integer> container = new ArrayList<>();
     private final Graph<String, DefaultEdge> graph;
@@ -177,11 +177,13 @@ public class GraphParser {
             path.addFirst(at);
         }
         return new Path(path);
+
     }
 
 
     // Inner Path class
     public static class Path {
+        boolean ab = false;
         private final List<String> nodes;
 
         public Path(List<String> nodes) {
@@ -239,17 +241,17 @@ public class GraphParser {
 //        return null; // Return null if no path is found
 //    }
 // Recursive DFS method
-    public Path graphSearch(String srcLabel, String dstLabel) {
-        Set<String> visited = new HashSet<>();
-        List<String> pathList = new ArrayList<>();
-        pathList.add(srcLabel);
-        boolean found = dfsHelper(srcLabel, dstLabel, visited, pathList);
-        if (found) {
-            return new Path(new ArrayList<>(pathList));
-        } else {
-            return null;
-        }
-    }
+//    public Path graphSearch(String srcLabel, String dstLabel) {
+//        Set<String> visited = new HashSet<>();
+//        List<String> pathList = new ArrayList<>();
+//        pathList.add(srcLabel);
+//        boolean found = dfsHelper(srcLabel, dstLabel, visited, pathList);
+//        if (found) {
+//            return new Path(new ArrayList<>(pathList));
+//        } else {
+//            return null;
+//        }
+//    }
 
     // Helper method for recursive DFS
     private boolean dfsHelper(String current, String destination, Set<String> visited, List<String> pathList) {

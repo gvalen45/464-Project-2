@@ -20,7 +20,7 @@ public class StackTest {
         graphParser.addNode("C");
         graphParser.addEdge("A", "B");
         graphParser.addEdge("B", "C");
-        System.out.println("***Setup done*** ");
+        System.out.println("***Setup done**** ");
     }
 
 
