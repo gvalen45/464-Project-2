@@ -168,7 +168,7 @@ public class GraphParser {
 
     //part 2 code adding paths
     // Method to perform BFS and find a path from srcLabel to dstLabel
-    public Path graphSearchBFS(String srcLabel, String dstLabel) {
+    public Path graphSearch(String srcLabel, String dstLabel) {
         if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
             return null; // Return null if either the source or destination is not in the graph
         }
