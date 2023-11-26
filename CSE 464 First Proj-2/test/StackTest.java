@@ -11,16 +11,20 @@ public class StackTest {
 
     private GraphParser graphParser;
 
-    @Before
-    public void setup() {
-        graphParser = new GraphParser();
-        //  a graph with nodes and edges
+    // Refactoring 2: Enhancing Test Clarity/Maintainability
+    private void initializeGraphWithTestData() {
         graphParser.addNode("A");
         graphParser.addNode("B");
         graphParser.addNode("C");
         graphParser.addEdge("A", "B");
         graphParser.addEdge("B", "C");
         System.out.println("***Setup done**** ");
+    }
+
+    @Before
+    public void setup() {
+        graphParser = new GraphParser();
+        initializeGraphWithTestData();
     }
 
 
