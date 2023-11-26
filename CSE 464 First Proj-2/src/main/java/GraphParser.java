@@ -42,14 +42,29 @@ public class GraphParser {
 
     // Feature 2 - API to add a node
     // Returns true if successful or false for any failures
-    // Checks for duplicates too
+    //    public boolean addNode(String label) {
+    //        if (graph.containsVertex(label)) {
+    //            System.out.println("-Node " + label + " is a duplicate. Cannot add node");
+    //            return false;
+    //        }
+    //        return graph.addVertex(label);
+    //    }
+    //Project 3
+    //Refactoring 1: Method Reusability
+    // Checks for duplicates Nodes
+    private boolean isNodeDuplicate(String label) {
+        return graph.containsVertex(label);
+    }
     public boolean addNode(String label) {
-        if (graph.containsVertex(label)) {
+        if (isNodeDuplicate(label)) {
             System.out.println("-Node " + label + " is a duplicate. Cannot add node");
             return false;
         }
         return graph.addVertex(label);
     }
+
+
+
 
     // Feature 2 - API to add a list of nodes
     // Just reuse the addNode function
