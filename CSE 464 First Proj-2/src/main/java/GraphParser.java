@@ -10,7 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 //test commit Branch Test bfs
 public class GraphParser {
+    //Refactoring 3: Encapsulation and Data Hiding
+    //private final List<Integer> container = new ArrayList<>();
     private final List<Integer> container = new ArrayList<>();
+
+    public List<Integer> getContainer() {
+        return Collections.unmodifiableList(container);
+    }
+
     private final Graph<String, DefaultEdge> graph;
 
     public GraphParser() {
