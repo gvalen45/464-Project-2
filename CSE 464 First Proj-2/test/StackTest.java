@@ -174,4 +174,39 @@ public class StackTest {
     }
 
 
+    @Test
+    public void testRandomWalk() {
+        System.out.println("TEST: Random Walk Search");
+        graphParser = new GraphParser();
+        graphParser.addNode("A");
+        graphParser.addNode("B");
+        graphParser.addNode("C");
+        graphParser.addNode("D");
+        graphParser.addNode("E");
+        graphParser.addNode("F");
+
+        graphParser.addEdge("A", "B");
+        graphParser.addEdge("A", "D");
+        graphParser.addEdge("B", "C");
+        graphParser.addEdge("B", "E");
+        graphParser.addEdge("C", "A"); // back edge to create a cycle
+        graphParser.addEdge("D", "E");
+        graphParser.addEdge("E", "F");
+        graphParser.addEdge("F", "C");
+
+        System.out.println("random testing");
+        for (int i = 0; i < 5; i++) {
+            GraphParser.Path result = graphParser.graphSearch("A", "C", GraphParser.Algorithm.RANDOM_WALK);
+            if (result == null) {
+                System.out.println("No path found in Random Walk search");
+            } else {
+                System.out.println("Path Found: " + result);
+            }
+        }
+    }
+
+
+
+
+
 }

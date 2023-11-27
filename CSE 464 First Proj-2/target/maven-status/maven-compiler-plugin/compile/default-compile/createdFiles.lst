@@ -1,4 +1,5 @@
 GraphParser$GraphSearchTemplate.class
+GraphParser$RandomWalk.class
 GraphParser.class
 GraphParser$DFS.class
 Main.class

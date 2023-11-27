@@ -203,6 +203,66 @@ public class GraphParser {
 
 
 
+
+
+    public class RandomWalk extends GraphSearchTemplate implements GraphSearchStrategy {
+        private Random random = new Random();
+        private List<String> currentPath = new ArrayList<>();
+
+        public RandomWalk(Graph<String, DefaultEdge> graph) {
+            super(graph);
+        }
+
+        @Override
+        protected void initializeSearch(String srcLabel, String dstLabel) {
+            this.srcLabel = srcLabel;
+            this.dstLabel = dstLabel;
+            prev = new HashMap<>();
+            visited = new HashSet<>();
+            visited.add(srcLabel);
+            prev.put(srcLabel, null);
+            currentPath.add(srcLabel); // Initialize the path with the source
+        }
+
+        @Override
+        protected String getNextNode() {
+            List<String> neighbors = new ArrayList<>();
+            for (DefaultEdge edge : graph.outgoingEdgesOf(srcLabel)) {
+                neighbors.add(graph.getEdgeTarget(edge));
+            }
+            if (neighbors.isEmpty()) return null;
+
+            String nextNode = neighbors.get(random.nextInt(neighbors.size()));
+            currentPath.add(nextNode); // Add next node to the path
+            printCurrentPath(); // Print the current path
+            srcLabel = nextNode; // Update the current node
+            return nextNode;
+        }
+
+        @Override
+        protected boolean hasNextNode() {
+            return !visited.contains(dstLabel);
+        }
+
+        @Override
+        protected boolean isDestinationReached(String node) {
+            visited.add(node); // Add to visited
+            return node.equals(dstLabel);
+        }
+
+        private void printCurrentPath() {
+            System.out.print("visiting Path{nodes=[");
+            for (int i = 0; i < currentPath.size(); i++) {
+                if (i > 0) System.out.print(", ");
+                System.out.print("Node{" + currentPath.get(i) + "}");
+            }
+            System.out.println("]}");
+        }
+    }
+
+
+
+
     // In GraphParser class
 
 
@@ -400,7 +460,7 @@ public class GraphParser {
 
     public enum Algorithm {
         BFS,
-        DFS
+        RANDOM_WALK, DFS
     }
 
     //Part 5
@@ -416,6 +476,11 @@ public class GraphParser {
 
             case DFS:
                 strategy = new DFS(this.graph);
+                break;
+
+
+            case RANDOM_WALK:
+                strategy = new RandomWalk(this.graph);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported search algorithm");
