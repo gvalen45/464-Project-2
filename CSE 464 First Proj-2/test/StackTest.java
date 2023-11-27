@@ -120,8 +120,8 @@ public class StackTest {
         graphParser.addEdge("2", "3");
         graphParser.addEdge("3", "4");
 
-        System.out.println("Graph before BFS:");
-        System.out.println(graphParser.toString());
+//        System.out.println("Graph before BFS:");
+//        System.out.println(graphParser.toString());
 
         GraphParser.Path result = graphParser.graphSearch("1", "4", GraphParser.Algorithm.BFS);
 
@@ -150,8 +150,8 @@ public class StackTest {
         graphParser.addEdge("A", "B");
         graphParser.addEdge("B", "C");
 
-        System.out.println("Graph before DFS:");
-        System.out.println(graphParser.toString());
+//        System.out.println("Graph before DFS:");
+//        System.out.println(graphParser.toString());
 
         // Perform DFS search from node "A" to "C", specifying the DFS algorithm
         GraphParser.Path result = graphParser.graphSearch("A", "C", GraphParser.Algorithm.DFS);

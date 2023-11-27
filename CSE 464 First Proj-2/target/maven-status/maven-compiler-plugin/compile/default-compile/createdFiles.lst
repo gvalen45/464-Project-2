@@ -2,6 +2,7 @@ GraphParser$GraphSearchTemplate.class
 GraphParser.class
 GraphParser$DFS.class
 Main.class
+GraphParser$GraphSearchStrategy.class
 GraphParser$Path.class
 GraphParser$Algorithm.class
 GraphParser$1.class

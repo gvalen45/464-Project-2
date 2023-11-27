@@ -34,12 +34,16 @@ public class GraphParser {
     }
 
 
-
+    //project part 3  Strategy Interface for BFS and DFS
+    public interface GraphSearchStrategy {
+        GraphParser.Path search(String srcLabel, String dstLabel);
+    }
 
 
 
 
     public abstract class GraphSearchTemplate {
+        int var = 1;
         protected Graph<String, DefaultEdge> graph;
         protected String srcLabel, dstLabel;
         protected Map<String, String> prev;
@@ -77,9 +81,8 @@ public class GraphParser {
         }
     }
 
-
-
-    public class BFS extends GraphSearchTemplate {
+//Implement the Strategy Interface in BFS and DFS Classes implements  GraphSearchStrategy
+    public class BFS extends GraphSearchTemplate implements GraphSearchStrategy {
         private Queue<String> queue;
 
         public BFS(Graph<String, DefaultEdge> graph) {
@@ -138,8 +141,8 @@ public class GraphParser {
     }
 
 
-
-    public class DFS extends GraphSearchTemplate {
+//Implement the Strategy Interface in BFS and DFS Classes implements  GraphSearchStrategy
+    public class DFS extends GraphSearchTemplate implements GraphSearchStrategy{
         private Stack<String> stack;
 
         public DFS(Graph<String, DefaultEdge> graph) {
@@ -402,64 +405,23 @@ public class GraphParser {
 
     //Part 5
     public Path graphSearch(String srcLabel, String dstLabel, Algorithm algo) {
-        GraphSearchTemplate searchTemplate;
+        //GraphSearchTemplate searchTemplate;
+        GraphSearchStrategy strategy;
+
 
         switch (algo) {
             case BFS:
-                searchTemplate = new BFS(this.graph);
+                strategy = new BFS(this.graph);
                 break;
-//                if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
-//                    return null; // Return null if either the source or destination is not in the graph
-//                }
-//
-//                Queue<String> queue = new LinkedList<>();
-//                Map<String, String> prev = new HashMap<>();
-//                Set<String> visited = new HashSet<>();
-//
-//                queue.add(srcLabel);
-//                visited.add(srcLabel);
-//                prev.put(srcLabel, null); // Source node has no predecessor
-//
-//                while (!queue.isEmpty()) {
-//                    String current = queue.poll();
-//                    System.out.println("Visiting Node: " + current);
-//
-//
-//                    if (current.equals(dstLabel)) {
-//                        Path foundPath = reconstructPath(prev, dstLabel);
-//                        System.out.println("Path Found: " + foundPath);
-//                        return foundPath; // Reconstruct the path if destination is found
-//
-//                    }
-//
-//                    for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
-//                        String neighbor = graph.getEdgeTarget(edge);
-//                        if (!visited.contains(neighbor)) {
-//                            queue.add(neighbor);
-//                            visited.add(neighbor);
-//                            prev.put(neighbor, current);
-//                        }
-//                    }
-//                }
-//
-//                return null;
 
             case DFS:
-                searchTemplate = new DFS(this.graph);
+                strategy = new DFS(this.graph);
                 break;
-//                Set<String> visitedd = new HashSet<>();
-//                List<String> pathList = new ArrayList<>();
-//                pathList.add(srcLabel);
-//                boolean found = dfsHelper(srcLabel, dstLabel, visitedd, pathList);
-//                if (found) {
-//                    return new Path(new ArrayList<>(pathList));
-//                } else {
-//                    return null;
-//                }
             default:
                 throw new IllegalArgumentException("Unsupported search algorithm");
         }
-        return searchTemplate.search(srcLabel, dstLabel);
+        //return searchTemplate.search(srcLabel, dstLabel);
+        return strategy.search(srcLabel, dstLabel);
     }
 
 
