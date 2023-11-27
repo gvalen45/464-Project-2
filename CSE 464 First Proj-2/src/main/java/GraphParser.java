@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 //test commit Branch Test bfs
+
 public class GraphParser {
     //Refactoring 3: Encapsulation and Data Hiding
     //private final List<Integer> container = new ArrayList<>();
@@ -31,6 +32,176 @@ public class GraphParser {
     public int size() {
         return container.size();
     }
+
+
+
+
+
+
+
+    public abstract class GraphSearchTemplate {
+        protected Graph<String, DefaultEdge> graph;
+        protected String srcLabel, dstLabel;
+        protected Map<String, String> prev;
+        protected Set<String> visited;
+
+        public GraphSearchTemplate(Graph<String, DefaultEdge> graph) {
+            this.graph = graph;
+        }
+
+        protected abstract void initializeSearch(String srcLabel, String dstLabel);
+
+        protected abstract String getNextNode();
+
+        protected abstract boolean hasNextNode();
+
+        protected abstract boolean isDestinationReached(String node);
+
+        public GraphParser.Path search(String srcLabel, String dstLabel) {
+            initializeSearch(srcLabel, dstLabel);
+            while (hasNextNode()) {
+                String current = getNextNode();
+                if (isDestinationReached(current)) {
+                    return reconstructPath(prev, dstLabel);
+                }
+            }
+            return null;
+        }
+
+        protected GraphParser.Path reconstructPath(Map<String, String> prev, String dstLabel) {
+            LinkedList<String> path = new LinkedList<>();
+            for (String at = dstLabel; at != null; at = prev.get(at)) {
+                path.addFirst(at);
+            }
+            return new GraphParser.Path(path);
+        }
+    }
+
+
+
+    public class BFS extends GraphSearchTemplate {
+        private Queue<String> queue;
+
+        public BFS(Graph<String, DefaultEdge> graph) {
+            super(graph);
+        }
+
+        @Override
+        protected void initializeSearch(String srcLabel, String dstLabel) {
+            this.srcLabel = srcLabel;
+            this.dstLabel = dstLabel;
+            prev = new HashMap<>();
+            visited = new HashSet<>();
+            queue = new LinkedList<>();
+            queue.add(srcLabel);
+            visited.add(srcLabel);
+            prev.put(srcLabel, null); // Source node has no predecessor
+        }
+
+        @Override
+        protected String getNextNode() {
+            return queue.poll();
+        }
+
+        @Override
+        protected boolean hasNextNode() {
+            return !queue.isEmpty();
+        }
+        public Path search(String srcLabel, String dstLabel) {
+            initializeSearch(srcLabel, dstLabel);
+            while (hasNextNode()) {
+                String current = getNextNode();
+                if (isDestinationReached(current)) {
+                    return reconstructPath(prev, dstLabel);
+                }
+                addNeighborsToQueue(current);
+            }
+            return null;
+        }
+
+        @Override
+        protected boolean isDestinationReached(String node) {
+            return node.equals(dstLabel);
+        }
+
+        // Additional method to add neighbors to the queue
+        protected void addNeighborsToQueue(String current) {
+            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+                String neighbor = graph.getEdgeTarget(edge);
+                if (!visited.contains(neighbor)) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                    prev.put(neighbor, current);
+                }
+            }
+        }
+    }
+
+
+
+    public class DFS extends GraphSearchTemplate {
+        private Stack<String> stack;
+
+        public DFS(Graph<String, DefaultEdge> graph) {
+            super(graph);
+        }
+
+        @Override
+        protected void initializeSearch(String srcLabel, String dstLabel) {
+            this.srcLabel = srcLabel;
+            this.dstLabel = dstLabel;
+            prev = new HashMap<>();
+            visited = new HashSet<>();
+            stack = new Stack<>();
+            stack.push(srcLabel);
+            visited.add(srcLabel);
+            prev.put(srcLabel, null);
+        }
+
+        @Override
+        protected String getNextNode() {
+            return stack.pop();
+        }
+
+        @Override
+        protected boolean hasNextNode() {
+            return !stack.isEmpty();
+        }
+
+        @Override
+        protected boolean isDestinationReached(String node) {
+            return node.equals(dstLabel);
+        }
+
+        public Path search(String srcLabel, String dstLabel) {
+            initializeSearch(srcLabel, dstLabel);
+            while (hasNextNode()) {
+                String current = getNextNode();
+                if (isDestinationReached(current)) {
+                    return reconstructPath(prev, dstLabel);
+                }
+                addNeighborsToStack(current);
+            }
+            return null;
+        }
+
+        // Additional method to add neighbors to the stack
+        protected void addNeighborsToStack(String current) {
+            for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+                String neighbor = graph.getEdgeTarget(edge);
+                if (!visited.contains(neighbor)) {
+                    stack.push(neighbor);
+                    visited.add(neighbor);
+                    prev.put(neighbor, current);
+                }
+            }
+        }
+    }
+
+
+
+    // In GraphParser class
+
 
     public boolean parseGraph(String filepath) {
         if (filepath == null || filepath.isEmpty()) {
@@ -231,57 +402,64 @@ public class GraphParser {
 
     //Part 5
     public Path graphSearch(String srcLabel, String dstLabel, Algorithm algo) {
+        GraphSearchTemplate searchTemplate;
+
         switch (algo) {
             case BFS:
-                if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
-                    return null; // Return null if either the source or destination is not in the graph
-                }
-
-                Queue<String> queue = new LinkedList<>();
-                Map<String, String> prev = new HashMap<>();
-                Set<String> visited = new HashSet<>();
-
-                queue.add(srcLabel);
-                visited.add(srcLabel);
-                prev.put(srcLabel, null); // Source node has no predecessor
-
-                while (!queue.isEmpty()) {
-                    String current = queue.poll();
-                    System.out.println("Visiting Node: " + current);
-
-
-                    if (current.equals(dstLabel)) {
-                        Path foundPath = reconstructPath(prev, dstLabel);
-                        System.out.println("Path Found: " + foundPath);
-                        return foundPath; // Reconstruct the path if destination is found
-
-                    }
-
-                    for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
-                        String neighbor = graph.getEdgeTarget(edge);
-                        if (!visited.contains(neighbor)) {
-                            queue.add(neighbor);
-                            visited.add(neighbor);
-                            prev.put(neighbor, current);
-                        }
-                    }
-                }
-
-                return null;
+                searchTemplate = new BFS(this.graph);
+                break;
+//                if (!graph.containsVertex(srcLabel) || !graph.containsVertex(dstLabel)) {
+//                    return null; // Return null if either the source or destination is not in the graph
+//                }
+//
+//                Queue<String> queue = new LinkedList<>();
+//                Map<String, String> prev = new HashMap<>();
+//                Set<String> visited = new HashSet<>();
+//
+//                queue.add(srcLabel);
+//                visited.add(srcLabel);
+//                prev.put(srcLabel, null); // Source node has no predecessor
+//
+//                while (!queue.isEmpty()) {
+//                    String current = queue.poll();
+//                    System.out.println("Visiting Node: " + current);
+//
+//
+//                    if (current.equals(dstLabel)) {
+//                        Path foundPath = reconstructPath(prev, dstLabel);
+//                        System.out.println("Path Found: " + foundPath);
+//                        return foundPath; // Reconstruct the path if destination is found
+//
+//                    }
+//
+//                    for (DefaultEdge edge : graph.outgoingEdgesOf(current)) {
+//                        String neighbor = graph.getEdgeTarget(edge);
+//                        if (!visited.contains(neighbor)) {
+//                            queue.add(neighbor);
+//                            visited.add(neighbor);
+//                            prev.put(neighbor, current);
+//                        }
+//                    }
+//                }
+//
+//                return null;
 
             case DFS:
-                Set<String> visitedd = new HashSet<>();
-                List<String> pathList = new ArrayList<>();
-                pathList.add(srcLabel);
-                boolean found = dfsHelper(srcLabel, dstLabel, visitedd, pathList);
-                if (found) {
-                    return new Path(new ArrayList<>(pathList));
-                } else {
-                    return null;
-                }
+                searchTemplate = new DFS(this.graph);
+                break;
+//                Set<String> visitedd = new HashSet<>();
+//                List<String> pathList = new ArrayList<>();
+//                pathList.add(srcLabel);
+//                boolean found = dfsHelper(srcLabel, dstLabel, visitedd, pathList);
+//                if (found) {
+//                    return new Path(new ArrayList<>(pathList));
+//                } else {
+//                    return null;
+//                }
             default:
                 throw new IllegalArgumentException("Unsupported search algorithm");
         }
+        return searchTemplate.search(srcLabel, dstLabel);
     }
 
 

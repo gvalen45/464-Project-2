@@ -1,5 +1,8 @@
-GraphParser$Algorithm.class
+GraphParser$GraphSearchTemplate.class
 GraphParser.class
+GraphParser$DFS.class
 Main.class
-GraphParser$1.class
 GraphParser$Path.class
+GraphParser$Algorithm.class
+GraphParser$1.class
+GraphParser$BFS.class
