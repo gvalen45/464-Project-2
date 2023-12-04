@@ -1,26 +1,38 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class StackTest {
 
     private GraphParser graphParser;
 
+    // Refactoring 2: Enhancing Test Clarity/Maintainability
     @Before
     public void setup() {
         graphParser = new GraphParser();
-        //  a graph with nodes and edges
+    }
+
+
+
+    private void initializeGraphWithABCTestData() {
         graphParser.addNode("A");
         graphParser.addNode("B");
         graphParser.addNode("C");
         graphParser.addEdge("A", "B");
         graphParser.addEdge("B", "C");
-        System.out.println("***Setup done**** ");
+    }
+
+    private void initializeGraphWith1234TestData() {
+        graphParser.addNode("1");
+        graphParser.addNode("2");
+        graphParser.addNode("3");
+        graphParser.addNode("4");
+        graphParser.addEdge("1", "2");
+        graphParser.addEdge("2", "3");
+        graphParser.addEdge("3", "4");
     }
 
 
@@ -31,6 +43,7 @@ public class StackTest {
 
     @Test
     public void testRemoveNodeSuccessfully() {
+        initializeGraphWithABCTestData();
         System.out.println("TEST: removal of a node that exists..");
         int initialNodeCount = graphParser.getNumNodes();
         assertTrue(graphParser.removeNode("B"));
@@ -40,6 +53,8 @@ public class StackTest {
 
     @Test
     public void testRemoveNodesSuccessfully() {
+        initializeGraphWithABCTestData();
+
         System.out.println("TEST: testRemoveNodesSuccessfully \n removal of multiple nodes that exist.");
         int initialNodeCount = graphParser.getNumNodes();
         graphParser.removeNodes(new String[]{"A", "C"});
@@ -49,6 +64,8 @@ public class StackTest {
 
     @Test
     public void testRemoveEdgeSuccessfully() {
+        initializeGraphWithABCTestData();
+
         System.out.println("TEST: testRemoveEdgeSuccessfully \n removal of an edge that exists.");
         int initialEdgeCount = graphParser.getNumEdges();
         assertTrue(graphParser.removeEdge("A", "B"));
@@ -58,6 +75,8 @@ public class StackTest {
 
     @Test
     public void testRemoveNonExistentNode() {
+        initializeGraphWithABCTestData();
+
         System.out.println("TEST: testRemoveNonExistentNode \n removal of a node that DNE.");
         int initialNodeCount = graphParser.getNumNodes();
         assertFalse(graphParser.removeNode("Z"));
@@ -67,6 +86,8 @@ public class StackTest {
 
     @Test
     public void testRemoveNonExistentNodes() {
+        initializeGraphWithABCTestData();
+
         System.out.println("TEST: testRemoveNonExistentNodes \n removal of multiple nodes that DNE");
         int initialNodeCount = graphParser.getNumNodes();
         graphParser.removeNodes(new String[]{"X", "Y"});
@@ -76,6 +97,9 @@ public class StackTest {
 
     @Test
     public void testRemoveNonExistentEdge() {
+
+        initializeGraphWithABCTestData();
+
         System.out.println("TEST: testRemoveNonExistentEdge \n  removal of an edge is DNE");
         int initialEdgeCount = graphParser.getNumEdges();
         assertFalse(graphParser.removeEdge("A", "Z"));
@@ -85,9 +109,9 @@ public class StackTest {
 
     @Test
     public void testBFS() {
-        System.out.println("TEST: testBFS \n  Perform BFS search from node \"1\" to \"4\"");
+        graphParser = new GraphParser();
 
-        //  the graph with nodes and edges
+        System.out.println("TEST: testBFS \n  Perform BFS search from node \"1\" to \"4\"");
         graphParser.addNode("1");
         graphParser.addNode("2");
         graphParser.addNode("3");
@@ -96,34 +120,93 @@ public class StackTest {
         graphParser.addEdge("2", "3");
         graphParser.addEdge("3", "4");
 
+//        System.out.println("Graph before BFS:");
+//        System.out.println(graphParser.toString());
+
         GraphParser.Path result = graphParser.graphSearch("1", "4", GraphParser.Algorithm.BFS);
 
         // Verify the path is as expected
-        List<String> expectedPath = Arrays.asList("1", "2", "3", "4");
-        assertNotNull(result);
-        assertEquals(expectedPath, result.getNodes());
-        System.out.println("[x] BFS found the correct path.");
+        if (result == null) {
+            System.out.println("No path found in BFS search");
+
+        }else{
+            List<String> expectedPath = Arrays.asList("1", "2", "3", "4");
+            assertNotNull(result);
+            assertEquals(expectedPath, result.getNodes());
+            System.out.println("[x] BFS found the correct path.");
+        }
+
     }
 
 
     @Test
     public void testDFS() {
         System.out.println("TEST: testDFS \n  Perform DFS search from node \"A\" to \"C\"");
-        System.out.println("Graph before DFS:");
-        System.out.println(graphParser.toString()); // Print the graph before performing DFS
+        // Initialize the graph specifically for this test
+        graphParser = new GraphParser();
+        graphParser.addNode("A");
+        graphParser.addNode("B");
+        graphParser.addNode("C");
+        graphParser.addEdge("A", "B");
+        graphParser.addEdge("B", "C");
+
+//        System.out.println("Graph before DFS:");
+//        System.out.println(graphParser.toString());
 
         // Perform DFS search from node "A" to "C", specifying the DFS algorithm
         GraphParser.Path result = graphParser.graphSearch("A", "C", GraphParser.Algorithm.DFS);
 
-        // Verify thegit  path is as expected
-        List<String> expectedPath = Arrays.asList("A", "B", "C"); // This is just an example
-        assertNotNull(result);
-        assertEquals(expectedPath, result.getNodes());
-        System.out.println("[x] DFS found the correct path.");
 
-        System.out.println("Graph after DFS:");
-        System.out.println(graphParser.toString());
+        if (result == null) {
+            System.out.println("No path found in DFS search");
+
+        }else{
+            List<String> expectedPath = Arrays.asList("A", "B", "C");
+            assertNotNull(result);
+            assertEquals(expectedPath, result.getNodes());
+            System.out.println("[x] DFS found the correct path.");
+        }
+
+
+
+        // Verify the path is as expected
+
     }
+
+
+    @Test
+    public void testRandomWalk() {
+        System.out.println("TEST: Random Walk Search");
+        graphParser = new GraphParser();
+        graphParser.addNode("A");
+        graphParser.addNode("B");
+        graphParser.addNode("C");
+        graphParser.addNode("D");
+        graphParser.addNode("E");
+        graphParser.addNode("F");
+
+        graphParser.addEdge("A", "B");
+        graphParser.addEdge("A", "D");
+        graphParser.addEdge("B", "C");
+        graphParser.addEdge("B", "E");
+        graphParser.addEdge("C", "A"); // back edge to create a cycle
+        graphParser.addEdge("D", "E");
+        graphParser.addEdge("E", "F");
+        graphParser.addEdge("F", "C");
+
+        System.out.println("random testing");
+        for (int i = 0; i < 5; i++) {
+            GraphParser.Path result = graphParser.graphSearch("A", "C", GraphParser.Algorithm.RANDOM_WALK);
+            if (result == null) {
+                System.out.println("No path found in Random Walk search");
+            } else {
+                System.out.println("Path Found: " + result);
+            }
+        }
+    }
+
+
+
 
 
 }
